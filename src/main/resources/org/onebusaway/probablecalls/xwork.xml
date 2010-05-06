@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 2.0//EN" "http://www.opensymphony.com/xwork/xwork-2.0.dtd">
+<xwork>
+
+	<include file="xwork-default.xml" />
+
+	<package name="probable-calls" extends="xwork-default">
+
+		<result-types>
+			<result-type name="agi-template" default="true"
+				class="org.onebusaway.probablecalls.agitemplates.AgiTemplateDispatcher" />
+			<result-type name="back" class="org.onebusaway.probablecalls.HistoryBackResult" />
+			<result-type name="repeat" class="org.onebusaway.probablecalls.HistoryRepeatResult" />
+		</result-types>
+
+		<interceptors>
+
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="params" />
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="defaultStack" />
+
+		<action name="/back" class="org.onebusaway.probablecalls.HistoryBackAction">
+			<result type="back" />
+		</action>
+
+		<action name="/repeat" class="com.opensymphony.xwork2.ActionSupport">
+			<result type="repeat" />
+		</action>
+
+	</package>
+</xwork>
+
