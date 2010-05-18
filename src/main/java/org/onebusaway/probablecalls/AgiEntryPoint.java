@@ -83,6 +83,8 @@ public class AgiEntryPoint implements AgiScript {
         contextMap.put(ACTIVE_ACTION, action);
         contextMap.remove(NEXT_ACTION);
 
+        onActionSetup(contextMap);
+
         ActionProxy actionProxy = _factory.createActionProxy(
             action.getNamespace(), action.getAction(), null, contextMap);
 
@@ -95,6 +97,8 @@ public class AgiEntryPoint implements AgiScript {
         if (_pause > 0) {
           channel.waitForDigit(_pause);
         }
+
+        onActionTearDown();
       }
 
     } catch (AgiHangupException ex) {
@@ -104,6 +108,14 @@ public class AgiEntryPoint implements AgiScript {
     } catch (Exception ex) {
       throw new AgiException("something went wrong", ex);
     }
+  }
+
+  protected void onActionSetup(Map<String, Object> contextMap) {
+
+  }
+
+  protected void onActionTearDown() {
+
   }
 
   /***************************************************************************
