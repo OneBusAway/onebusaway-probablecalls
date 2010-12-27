@@ -14,6 +14,8 @@ import org.onebusaway.probablecalls.AgiActionName;
 import org.onebusaway.probablecalls.AgiEntryPoint;
 import org.onebusaway.probablecalls.History;
 import org.onebusaway.probablecalls.TextToSpeechFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
@@ -24,6 +26,8 @@ public abstract class AbstractAgiTemplate implements AgiTemplate {
   private static final String ALL_DIGITS = "0123456789#*";
 
   private static final long serialVersionUID = 1L;
+
+  private static Logger _log = LoggerFactory.getLogger(AbstractAgiTemplate.class);
 
   private boolean _built = false;
 
@@ -76,6 +80,8 @@ public abstract class AbstractAgiTemplate implements AgiTemplate {
       for (AgiTemplateOperation op : _operations) {
 
         char c = op.execute(context, opts);
+
+        _log.debug("digit={}", c);
 
         if (c != '\0') {
           AgiActionName result = waitForRemainingInput(context, opts, c);
@@ -204,6 +210,14 @@ public abstract class AbstractAgiTemplate implements AgiTemplate {
   private synchronized void checkBuild(ActionContext context) {
     if (!_built || _buildOnEachReqeust) {
       buildTemplate(context);
+      
+      /**
+       * Optionally add a pause after each and every action
+       */
+      int pauseAfterAction = AgiEntryPoint.getPauseAfterAction(context);
+      if( pauseAfterAction > 0)
+        addPause(pauseAfterAction);
+      
       _built = true;
     }
   }
@@ -216,11 +230,18 @@ public abstract class AbstractAgiTemplate implements AgiTemplate {
     while (true) {
 
       b.append(c);
+      String value = b.toString();
+
+      _log.debug("value={}", c);
 
       for (AgiDTMFOperation mapping : _actionMappings) {
-        AgiActionName result = mapping.execute(context, b.toString());
-        if (result != null)
+        _log.debug("mapping={}", mapping);
+
+        AgiActionName result = mapping.execute(context, value);
+        if (result != null) {
+          _log.debug("result={}", result);
           return result;
+        }
       }
 
       c = opts.waitForDigit(_secondaryTimeout);
@@ -325,6 +346,12 @@ public abstract class AbstractAgiTemplate implements AgiTemplate {
       }
 
       return null;
+    }
+
+    @Override
+    public String toString() {
+      return "DTMFActionMapping(pattern=" + _pattern + ", action=" + _action
+          + ")";
     }
   }
 }

@@ -31,6 +31,9 @@ public class AgiEntryPoint implements AgiScript {
 
   private static final String NEXT_ACTION = AgiEntryPoint.class.getName()
       + ".next";
+  
+  private static final String PAUSE_AFTER_ACTION = AgiEntryPoint.class.getName()
+  + ".pauseAfterAction";
 
   private ActionProxyFactory _factory = new DefaultActionProxyFactory();
 
@@ -67,8 +70,11 @@ public class AgiEntryPoint implements AgiScript {
     contextMap.put(AGI_REQUEST_PARAM, request);
     contextMap.put(AGI_CHANNEL_PARAM, channel);
 
-    contextMap.put(ActionContext.APPLICATION, new HashMap<Object, Object>());
-    contextMap.put(ActionContext.SESSION, new HashMap<Object, Object>());
+    HashMap<Object, Object> applicationMap = new HashMap<Object, Object>();
+    applicationMap.put(PAUSE_AFTER_ACTION, _pause);
+    
+    contextMap.put(ActionContext.APPLICATION, applicationMap);
+    contextMap.put(ActionContext.SESSION, applicationMap);
 
     try {
 
@@ -93,10 +99,6 @@ public class AgiEntryPoint implements AgiScript {
         ActionInvocation invoke = actionProxy.getInvocation();
         ActionContext context = invoke.getInvocationContext();
         action = (AgiActionName) context.get(NEXT_ACTION);
-
-        if (_pause > 0) {
-          channel.waitForDigit(_pause);
-        }
 
         onActionTearDown();
       }
@@ -141,5 +143,15 @@ public class AgiEntryPoint implements AgiScript {
 
   public static void setNextAction(ActionContext context, AgiActionName action) {
     context.put(NEXT_ACTION, action);
+  }
+  
+  public static int getPauseAfterAction(ActionContext context) {
+    Map<String, Object> application = context.getApplication();
+    if( application == null)
+      return 0;
+    Integer pauseAfterAction = (Integer) application.get(PAUSE_AFTER_ACTION);
+    if( pauseAfterAction == null )
+      return 0;
+    return pauseAfterAction;
   }
 }
