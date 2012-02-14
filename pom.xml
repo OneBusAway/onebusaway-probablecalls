@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
     <groupId>org.onebusaway</groupId>
-    <artifactId>onebusaway-probablecalls</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
-    
-    <name>onebusaway-probablecalls</name>
-    <description>A library for writing interactive phone applications on top of xworks</description>
+    <artifactId>onebusaway</artifactId>
+    <version>1.1.6</version>
+  </parent>
+  <artifactId>onebusaway-probablecalls</artifactId>
+  <version>1.0.6-SNAPSHOT</version>
 
-    <parent>
-        <groupId>org.onebusaway</groupId>
-        <artifactId>onebusaway</artifactId>
-        <version>1.0.7</version>
-    </parent>
+  <name>onebusaway-probablecalls</name>
+  <description>A library for writing interactive phone applications on top of xworks</description>
+  <url>https://github.com/OneBusAway/onebusaway-probablecalls/wiki/</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.asteriskjava</groupId>
-            <artifactId>asterisk-java</artifactId>
-            <version>1.0.0.M3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.opensymphony</groupId>
-            <artifactId>xwork</artifactId>
-            <version>2.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-    </dependencies>
+  <scm>
+    <connection>scm:git:http://github.com/OneBusAway/onebusaway-probablecalls.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/OneBusAway/onebusaway-probablecalls.git</developerConnection>
+    <url>http://github.com/OneBusAway/onebusaway-probablecalls</url>
+  </scm>
 
-    <scm>
-        <connection>scm:svn:http://onebusaway.googlecode.com/svn/onebusaway-probablecalls/trunk</connection>
-        <developerConnection>scm:svn:https://onebusaway.googlecode.com/svn/onebusaway-probablecalls/trunk</developerConnection>
-        <url>http://code.google.com/p/onebusaway/source/browse/#svn/onebusaway-probablecalls/trunk</url>
-    </scm>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/OneBusAway/onebusaway-probablecalls/issues</url>
+  </issueManagement>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>org.asteriskjava</groupId>
+      <artifactId>asterisk-java</artifactId>
+      <version>1.0.0.M3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.opensymphony</groupId>
+      <artifactId>xwork</artifactId>
+      <version>2.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+  </dependencies>
 </project>
