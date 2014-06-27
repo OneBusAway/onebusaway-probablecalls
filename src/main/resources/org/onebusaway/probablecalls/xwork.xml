@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 2.0//EN" "http://www.opensymphony.com/xwork/xwork-2.0.dtd">
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 2.0//EN" "http://struts.apache.org/dtds/xwork-2.0.dtd">
 <xwork>
 
 	<include file="xwork-default.xml" />
